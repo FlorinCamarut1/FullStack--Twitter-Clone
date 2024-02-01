@@ -1,35 +1,42 @@
 'use client';
 import useLoginModal from '@/hooks/useLoginModal';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useTransition } from 'react';
 
 import Input from '../Input';
 import Modal from '../Modal';
 import useRegisterModal from '@/hooks/useRegisterModal';
+import { login } from '@/actions/login';
+import toast from 'react-hot-toast';
 
 const LoginModal = () => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
+  const [isPending, startTransition] = useTransition();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoading, setIsLoadin] = useState(false);
 
   const onToggle = useCallback(() => {
-    if (isLoading) return;
+    if (isPending) return;
     loginModal.onClose();
     registerModal.onOpen();
-  }, [isLoading, registerModal, loginModal]);
+  }, [isPending, registerModal, loginModal]);
 
-  const onSubmit = useCallback(async () => {
-    try {
-      // TODO ADD LOGIN
-      loginModal.onClose();
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoadin(false);
-    }
-  }, [loginModal]);
+  const onSubmit = useCallback(() => {
+    startTransition(() => {
+      login({ email, password }).then((data) => {
+        if (data?.error) {
+          toast.error(`${data.error}`);
+          return;
+        }
+        toast.success('Logged in Succesfully!');
+        loginModal.onClose();
+        setEmail('');
+
+        setPassword('');
+      });
+    });
+  }, [loginModal, email, password]);
 
   const bodyContent = (
     <div className='flex flex-col gap-4'>
@@ -37,13 +44,13 @@ const LoginModal = () => {
         placeholder='Email'
         onChange={(e) => setEmail(e.target.value)}
         value={email}
-        disabled={isLoading}
+        disabled={isPending}
       />
       <Input
         placeholder='Password'
         onChange={(e) => setPassword(e.target.value)}
         value={password}
-        disabled={isLoading}
+        disabled={isPending}
       />
     </div>
   );
@@ -64,7 +71,7 @@ const LoginModal = () => {
 
   return (
     <Modal
-      disabled={isLoading}
+      disabled={isPending}
       isOpen={loginModal.isOpen}
       title='Login'
       actionLabel='Sign in'

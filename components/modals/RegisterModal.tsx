@@ -1,5 +1,5 @@
 'use client';
-import * as z from 'zod';
+
 import { useCallback, useState, useTransition } from 'react';
 import { register } from '@/actions/register';
 
@@ -9,7 +9,6 @@ import useRegisterModal from '@/hooks/useRegisterModal';
 import Input from '../Input';
 import Modal from '../Modal';
 import toast from 'react-hot-toast';
-import { RegisterSchema } from '@/schemas';
 
 const RegisterModal = () => {
   const loginModal = useLoginModal();
