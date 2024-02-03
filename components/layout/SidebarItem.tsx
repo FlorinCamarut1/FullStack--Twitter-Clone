@@ -1,5 +1,5 @@
 'use client';
-import { useCurrentUser } from '@/hooks/use-current-user';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
 import useLoginModal from '@/hooks/useLoginModal';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';

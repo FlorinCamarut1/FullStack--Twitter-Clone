@@ -29,11 +29,12 @@ const LoginModal = () => {
           toast.error(`${data.error}`);
           return;
         }
-        toast.success('Logged in Succesfully!');
-        loginModal.onClose();
-        setEmail('');
-
-        setPassword('');
+        if (data.success) {
+          toast.success(data?.success);
+          loginModal.onClose();
+          setEmail('');
+          setPassword('');
+        }
       });
     });
   }, [loginModal, email, password]);

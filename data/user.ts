@@ -8,7 +8,8 @@ export const getUserByEmail = async (email: string) => {
       },
     });
     return user;
-  } catch {
+  } catch (error) {
+    console.log(error);
     return null;
   }
 };
@@ -21,7 +22,8 @@ export const getUserById = async (id: string) => {
       },
     });
     return user;
-  } catch {
+  } catch (error) {
+    console.log(error);
     return null;
   }
 };
@@ -34,7 +36,8 @@ export const getByUsername = async (username: string) => {
       },
     });
     return user;
-  } catch {
+  } catch (error) {
+    console.log(error);
     return null;
   }
 };
