@@ -12,15 +12,12 @@ interface AvatarProps {
 const Avatar: React.FC<AvatarProps> = ({ userId, isLarge, hasBorder }) => {
   const { data: fetchedUser } = useUser(userId);
   const router = useRouter();
-  const onClick = useCallback(
-    (event: any) => {
-      event.stopPropagation();
+  const onClick = (event: any) => {
+    event.stopPropagation();
 
-      const url = `/users/${userId}`;
-      router.push(url);
-    },
-    [router, userId]
-  );
+    const url = `/users/${userId}`;
+    router.push(url);
+  };
 
   return (
     <div

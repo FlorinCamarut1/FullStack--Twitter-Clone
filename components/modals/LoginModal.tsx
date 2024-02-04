@@ -22,14 +22,14 @@ const LoginModal = () => {
     registerModal.onOpen();
   }, [isPending, registerModal, loginModal]);
 
-  const onSubmit = useCallback(() => {
+  const onSubmit = () => {
     startTransition(() => {
       login({ email, password }).then((data) => {
         if (data?.error) {
           toast.error(`${data.error}`);
           return;
         }
-        if (data.success) {
+        if (data?.success) {
           toast.success(data?.success);
           loginModal.onClose();
           setEmail('');
@@ -37,7 +37,7 @@ const LoginModal = () => {
         }
       });
     });
-  }, [loginModal, email, password]);
+  };
 
   const bodyContent = (
     <div className='flex flex-col gap-4'>

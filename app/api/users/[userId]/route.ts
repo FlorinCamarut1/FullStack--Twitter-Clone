@@ -5,6 +5,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import db from '@/lib/db';
 
 export async function GET(request: NextRequest, context: any) {
+  if (request.method !== 'GET') {
+    return NextResponse.json({ message: 'Invalid method!' }, { status: 405 });
+  }
   try {
     const { params } = context;
 

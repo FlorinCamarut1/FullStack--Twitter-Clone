@@ -12,3 +12,10 @@ export const RegisterSchema = z.object({
     message: 'Password is too short! (minimum 6 character required!)',
   }),
 });
+export const EditUserSchema = z.object({
+  name: z.optional(z.string()),
+  username: z.optional(z.string()),
+  bio: z.optional(z.string()),
+  profileImage: z.optional(z.string()),
+  coverImage: z.optional(z.string()),
+});

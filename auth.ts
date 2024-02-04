@@ -1,9 +1,9 @@
 import { PrismaAdapter } from '@auth/prisma-adapter';
+import { getUserById } from './data/user';
 
 import NextAuth from 'next-auth';
 import authConfig from './auth.config';
 import db from './lib/db';
-import { getUserById } from './data/user';
 
 export const {
   handlers: { GET, POST },
@@ -24,6 +24,7 @@ export const {
         session.user.name = token.name;
         session.user.email = token.email;
       }
+
       return session;
     },
     async jwt({ token }) {

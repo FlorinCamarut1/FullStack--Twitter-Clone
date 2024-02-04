@@ -2,6 +2,7 @@
 
 import { useCallback, useState, useTransition } from 'react';
 import { register } from '@/actions/register';
+import { useSWRConfig } from 'swr';
 
 import useLoginModal from '@/hooks/useLoginModal';
 import useRegisterModal from '@/hooks/useRegisterModal';
@@ -11,6 +12,7 @@ import Modal from '../Modal';
 import toast from 'react-hot-toast';
 
 const RegisterModal = () => {
+  const { mutate } = useSWRConfig();
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
 
@@ -29,7 +31,7 @@ const RegisterModal = () => {
     loginModal.onOpen();
   }, [loginModal, registerModal, isPending]);
 
-  const submitHandler = useCallback(() => {
+  const submitHandler = () => {
     startTransition(() => {
       register({
         email,
@@ -47,9 +49,10 @@ const RegisterModal = () => {
         setName('');
         setUsername('');
         setPassword('');
+        mutate('/api/users');
       });
     });
-  }, [email, name, username, password, registerModal]);
+  };
 
   const bodyContent = (
     <div className='flex flex-col gap-4'>
