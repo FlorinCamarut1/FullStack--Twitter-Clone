@@ -61,22 +61,29 @@ const EditModal = ({ currentUser }: EditModalProps) => {
   ]);
 
   useEffect(() => {
-    setName(currUser.name);
-    setUsername(currUser.username);
-    setBio(currUser.bio);
-    setProfileImage(currUser.profileImage);
-  }, [currUser.name, currUser.username, currUser.bio, currUser.profileImage]);
+    setName(currUser?.name);
+    setUsername(currUser?.username);
+    setBio(currUser?.bio);
+    setProfileImage(currUser?.profileImage);
+    setCoverImage(currUser?.coverImage);
+  }, [
+    currUser?.name,
+    currUser?.username,
+    currUser?.bio,
+    currUser?.profileImage,
+    currUser?.coverImage,
+  ]);
 
   const bodyContent = (
     <div className='flex flex-col gap-4'>
       <ImageUpload
-        value={profileImage}
+        value={profileImage || ''}
         disabled={isPending}
         onChange={(image) => setProfileImage(image)}
         label='Upload profile picture'
       />
       <ImageUpload
-        value={coverImage}
+        value={coverImage || ''}
         disabled={isPending}
         onChange={(image) => setCoverImage(image)}
         label='Upload cover picture'
@@ -84,19 +91,19 @@ const EditModal = ({ currentUser }: EditModalProps) => {
       <Input
         placeholder='Name'
         onChange={(e) => setName(e.target.value)}
-        value={name}
+        value={name || ''}
         disabled={isPending}
       />
       <Input
         placeholder='Username'
         onChange={(e) => setUsername(e.target.value)}
-        value={username}
+        value={username || ''}
         disabled={isPending}
       />
       <Input
         placeholder='Bio'
         onChange={(e) => setBio(e.target.value)}
-        value={bio}
+        value={bio || ''}
         disabled={isPending}
       />
     </div>

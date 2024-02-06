@@ -21,7 +21,7 @@ export default async function RootLayout({
       <SessionProvider session={session}>
         <body className={inter.className}>
           <>
-            <div className='h-screen bg-black'>
+            <div className='h-screen bg-black overflow-scroll'>
               <div className=' container h-full mx-auto xl:px-30 max-w-6xl'>
                 <div className='grid grid-cols-4 h-full'>
                   <Sidebar currentUser={session?.user} />

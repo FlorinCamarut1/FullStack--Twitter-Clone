@@ -3,6 +3,7 @@ import Header from '@/components/Header';
 import EditModal from '@/components/modals/EditModal';
 import LoginModal from '@/components/modals/LoginModal';
 import RegisterModal from '@/components/modals/RegisterModal';
+import PostFeed from '@/components/posts/PostFeed';
 import UserBio from '@/components/users/UserBio';
 import UserHero from '@/components/users/UserHero';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
@@ -29,8 +30,9 @@ const UserView = ({ params }: { params: { userId: string } }) => {
     <>
       <Toaster />
       <Header label={fetchedUser.name} showBackArrow />
-      <UserHero userId={userId} />
-      <UserBio userId={userId} currentUser={currentUser} />
+      <UserHero userId={userId as string} />
+      <UserBio userId={userId as string} currentUser={currentUser} />
+      <PostFeed userId={userId} />
       <EditModal currentUser={currentUser} />
       <RegisterModal />
       <LoginModal />
