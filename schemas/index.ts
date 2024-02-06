@@ -25,3 +25,6 @@ export const PostSchema = z.object({
     .string()
     .min(1, { message: 'Please enter at least 1 character for your post!' }),
 });
+export const FollowSchema = z.object({
+  userId: z.string(),
+});
