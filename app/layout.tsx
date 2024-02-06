@@ -15,15 +15,16 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const session = await auth();
+
   return (
-    <SessionProvider session={session}>
-      <html lang='en'>
+    <html lang='en'>
+      <SessionProvider session={session}>
         <body className={inter.className}>
           <>
-            <div className='h-screen bg-black'>
+            <div className='h-screen bg-black overflow-scroll'>
               <div className=' container h-full mx-auto xl:px-30 max-w-6xl'>
                 <div className='grid grid-cols-4 h-full'>
-                  <Sidebar />
+                  <Sidebar currentUser={session?.user} />
                   <div className='col-span-3 lg:col-span-2 border-x-[1px] border-neutral-800'>
                     {children}
                   </div>
@@ -33,8 +34,8 @@ export default async function RootLayout({
             </div>
           </>
         </body>
-      </html>
-    </SessionProvider>
+      </SessionProvider>
+    </html>
   );
 }
 

@@ -3,25 +3,35 @@
 import { BsBellFill, BsHouseFill } from 'react-icons/bs';
 import { FaUser } from 'react-icons/fa';
 import { BiLogOut } from 'react-icons/bi';
+import { signOut, useSession } from 'next-auth/react';
 
 import SidebarLogo from './SidebarLogo';
 import SidebarItem from './SidebarItem';
 import SidebarTweetButton from './SidebarTweetButton';
-import { signOut, useSession } from 'next-auth/react';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
 
-const items = [
-  { label: 'Home', href: '/', icon: BsHouseFill },
-  {
-    label: 'Notifications',
-    href: '/notifications',
-    icon: BsBellFill,
-    auth: true,
-  },
-  { label: 'Profile', href: '/users/123', icon: FaUser, auth: true },
-];
+interface SidebarProps {
+  currentUser?: object;
+}
 
-const Sidebar = () => {
-  const currentUser = useSession();
+const Sidebar = ({ currentUser }: SidebarProps) => {
+  const CurrUser = useCurrentUser();
+
+  const items = [
+    { label: 'Home', href: '/', icon: BsHouseFill },
+    {
+      label: 'Notifications',
+      href: '/notifications',
+      icon: BsBellFill,
+      auth: true,
+    },
+    {
+      label: 'Profile',
+      href: `/users/${CurrUser?.id}`,
+      icon: FaUser,
+      auth: true,
+    },
+  ];
   return (
     <div className='col-span-1 h-full pr-4 md:pr-6'>
       <div className='flex flex-col items-end'>
@@ -36,7 +46,7 @@ const Sidebar = () => {
               auth={item.auth}
             />
           ))}
-          {currentUser.data?.user && (
+          {currentUser && (
             <SidebarItem
               onClick={() => {
                 signOut();
