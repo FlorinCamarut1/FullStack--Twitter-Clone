@@ -15,7 +15,7 @@ const useLike = ({ postId, userId }: { postId: string; userId?: string }) => {
   const { data: fetchedPost, mutate: mutateFetchedPost } = usePost(postId);
   const { mutate: mutateFetchedPosts } = usePosts(userId);
 
-  const currentFetchPost = fetchedPost[0];
+  const currentFetchPost = fetchedPost?.[0];
 
   const loginModal = useLoginModal();
 
