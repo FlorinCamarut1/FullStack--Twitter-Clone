@@ -18,6 +18,34 @@ export const comments = async (body: string, postId: string) => {
         postId,
       },
     });
+    try {
+      const post = await db.post.findUnique({
+        where: {
+          id: postId,
+        },
+      });
+
+      if (post?.userId) {
+        await prisma?.notification.create({
+          data: {
+            body: 'Someone replied to your tweet!',
+            userId: post.userId,
+          },
+        });
+
+        await db.user.update({
+          where: {
+            id: post.userId,
+          },
+          data: {
+            hasNotification: true,
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      return { error: 'Cannot post notification!' };
+    }
 
     return { success: 'Succesfully added comment!' };
   } catch (error) {

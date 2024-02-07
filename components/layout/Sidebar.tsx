@@ -3,19 +3,18 @@
 import { BsBellFill, BsHouseFill } from 'react-icons/bs';
 import { FaUser } from 'react-icons/fa';
 import { BiLogOut } from 'react-icons/bi';
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
 
 import SidebarLogo from './SidebarLogo';
 import SidebarItem from './SidebarItem';
 import SidebarTweetButton from './SidebarTweetButton';
-import { useCurrentUser } from '@/hooks/useCurrentUser';
+import useUser from '@/hooks/useUser';
 
-interface SidebarProps {
-  currentUser?: object;
-}
+const Sidebar = () => {
+  const currentUser = useCurrentUser();
 
-const Sidebar = ({ currentUser }: SidebarProps) => {
-  const CurrUser = useCurrentUser();
+  const { data: fetchedCurrentUserData } = useUser(currentUser?.id as string);
 
   const items = [
     { label: 'Home', href: '/', icon: BsHouseFill },
@@ -24,10 +23,11 @@ const Sidebar = ({ currentUser }: SidebarProps) => {
       href: '/notifications',
       icon: BsBellFill,
       auth: true,
+      alert: fetchedCurrentUserData?.hasNotification,
     },
     {
       label: 'Profile',
-      href: `/users/${CurrUser?.id}`,
+      href: `/users/${currentUser?.id}`,
       icon: FaUser,
       auth: true,
     },
@@ -44,6 +44,7 @@ const Sidebar = ({ currentUser }: SidebarProps) => {
               label={item.label}
               icon={item.icon}
               auth={item.auth}
+              alert={item.alert}
             />
           ))}
           {currentUser && (
