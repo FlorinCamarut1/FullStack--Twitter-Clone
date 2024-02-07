@@ -30,12 +30,12 @@ export const useFollow = (userId: string) => {
 
     if (isFollowing) {
       startTransition(() => {
-        followOrUnfollow(userId, 'DELETE').then((data) => {
+        followOrUnfollow(userId, 'UNFOLLOW').then((data) => {
           if (data?.error) {
             toast.error(data.error);
           }
           if (data?.success) {
-            toast.success('Unfollowed succesfully!');
+            toast.success(data.success);
             mutateCurrentUser();
             mutateFetchedUser();
           }
@@ -43,12 +43,12 @@ export const useFollow = (userId: string) => {
       });
     } else if (!isFollowing) {
       startTransition(() => {
-        followOrUnfollow(userId, 'POST').then((data) => {
+        followOrUnfollow(userId, 'FOLLOW').then((data) => {
           if (data?.error) {
             toast.error(data.error);
           }
           if (data?.success) {
-            toast.success('Followed succesfully!');
+            toast.success(data.success);
             mutateCurrentUser();
             mutateFetchedUser();
           }

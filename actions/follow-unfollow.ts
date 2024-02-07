@@ -3,7 +3,6 @@
 import { auth } from '@/auth';
 
 import db from '@/lib/db';
-import { error } from 'console';
 
 export const followOrUnfollow = async (userId: string, method: string) => {
   try {
@@ -30,10 +29,10 @@ export const followOrUnfollow = async (userId: string, method: string) => {
 
     let updatedFollowingIds = [...(curUser?.followingIds || [])];
 
-    if (method === 'POST') {
+    if (method === 'FOLLOW') {
       updatedFollowingIds.push(userId);
     }
-    if (method === 'DELETE') {
+    if (method === 'UNFOLLOW') {
       updatedFollowingIds = updatedFollowingIds.filter(
         (followingId) => followingId !== userId
       );
@@ -46,7 +45,11 @@ export const followOrUnfollow = async (userId: string, method: string) => {
         followingIds: updatedFollowingIds,
       },
     });
-    return { success: 'Followed succesfully!' };
+    return {
+      success: `${
+        method === 'FOLLOW' ? 'Followed' : 'Unfollowed'
+      } succesfully!`,
+    };
   } catch (error) {
     console.log(error);
     return { error: 'Cannot follow!' };

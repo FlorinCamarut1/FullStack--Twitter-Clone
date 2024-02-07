@@ -1,3 +1,4 @@
+import { auth } from '@/auth';
 import db from '@/lib/db';
 
 export const getUserByEmail = async (email: string) => {
