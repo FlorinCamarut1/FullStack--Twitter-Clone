@@ -12,7 +12,6 @@ interface PostItemProps {
   userId?: string;
 }
 const PostItem = ({ data = {}, userId }: PostItemProps) => {
-  const currentUser = useCurrentUser();
   const router = useRouter();
   const loginModal = useLoginModal();
 
@@ -20,9 +19,9 @@ const PostItem = ({ data = {}, userId }: PostItemProps) => {
     (event: any) => {
       event.stopPropagation();
 
-      router.push(`/users/${data.user.id}`);
+      router.push(`/users/${data?.user?.id}`);
     },
-    [data.user.id, router]
+    [data?.user?.id, router]
   );
 
   const goToPost = useCallback(() => {
