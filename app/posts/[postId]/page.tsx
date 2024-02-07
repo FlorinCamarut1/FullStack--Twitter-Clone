@@ -1,15 +1,16 @@
 'use client';
-import { useRouter } from 'next/navigation';
+
 import { ClipLoader } from 'react-spinners';
 
 import Header from '@/components/Header';
 import PostItem from '@/components/posts/PostItem';
 import usePost from '@/hooks/usePost';
 import Form from '@/components/Form';
+import CommentFeed from '@/components/posts/CommentFeed';
+import { Toaster } from 'react-hot-toast';
 
 const PostPage = ({ params }: { params: { postId: string } }) => {
   const postId = params.postId;
-  const router = useRouter();
 
   const { data: fetchedPost, isLoading } = usePost(postId);
 
@@ -22,6 +23,7 @@ const PostPage = ({ params }: { params: { postId: string } }) => {
 
   return (
     <>
+      <Toaster />
       <Header label='Tweet' showBackArrow />
       <PostItem data={fetchedPost[0]} />
       <Form
@@ -29,6 +31,7 @@ const PostPage = ({ params }: { params: { postId: string } }) => {
         isComment
         placeholder='Tweet your reply'
       />
+      <CommentFeed comments={fetchedPost[0]?.comments} />
     </>
   );
 };
