@@ -27,34 +27,34 @@ export const like = async (postId: string, method: string) => {
     /**
      * Notifications
      */
-    // try {
-    //   const post = await db.post.findUnique({
-    //     where: {
-    //       id: postId,
-    //     },
-    //   });
+    try {
+      const post = await db.post.findUnique({
+        where: {
+          id: postId,
+        },
+      });
 
-    //   if (post?.userId) {
-    //     await prisma?.notification.create({
-    //       data: {
-    //         body: 'Someone liked you tweet!',
-    //         userId: post.userId,
-    //       },
-    //     });
+      if (post?.userId) {
+        await db.notification.create({
+          data: {
+            body: 'Someone liked you tweet!',
+            userId: post.userId,
+          },
+        });
 
-    //     await db.user.update({
-    //       where: {
-    //         id: post.userId,
-    //       },
-    //       data: {
-    //         hasNotification: true,
-    //       },
-    //     });
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    //   return { error: 'Cannot post notification!' };
-    // }
+        await db.user.update({
+          where: {
+            id: post.userId,
+          },
+          data: {
+            hasNotification: true,
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      return { error: 'Cannot post notification!' };
+    }
   }
 
   if (method === 'DISLIKE') {
