@@ -33,21 +33,26 @@ export const followOrUnfollow = async (userId: string, method: string) => {
     if (method === 'FOLLOW') {
       updatedFollowingIds.push(userId);
 
-      await db.notification.create({
-        data: {
-          body: 'Someone followed you!',
-          userId,
-        },
-      });
+      // try {
+      //   await db.notification.create({
+      //     data: {
+      //       body: 'Someone followed you!',
+      //       userId,
+      //     },
+      //   });
 
-      await db.user.update({
-        where: {
-          id: userId,
-        },
-        data: {
-          hasNotification: true,
-        },
-      });
+      //   await db.user.update({
+      //     where: {
+      //       id: userId,
+      //     },
+      //     data: {
+      //       hasNotification: true,
+      //     },
+      //   });
+      // } catch (error) {
+      //   console.log(error);
+      //   return { error: 'Cannot post notfication!' };
+      // }
     }
     if (method === 'UNFOLLOW') {
       updatedFollowingIds = updatedFollowingIds.filter(

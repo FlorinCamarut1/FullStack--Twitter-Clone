@@ -2,6 +2,7 @@
 
 import { auth } from '@/auth';
 import db from '@/lib/db';
+import { post } from './post';
 
 export const like = async (postId: string, method: string) => {
   const session = await auth();
@@ -26,28 +27,34 @@ export const like = async (postId: string, method: string) => {
     /**
      * Notifications
      */
+    // try {
+    //   const post = await db.post.findUnique({
+    //     where: {
+    //       id: postId,
+    //     },
+    //   });
 
-    const post = await db.post.findUnique({
-      where: {
-        id: postId,
-      },
-    });
+    //   if (post?.userId) {
+    //     await prisma?.notification.create({
+    //       data: {
+    //         body: 'Someone liked you tweet!',
+    //         userId: post.userId,
+    //       },
+    //     });
 
-    await prisma?.notification.create({
-      data: {
-        body: 'Someone liked you tweet!',
-        userId: post?.userId as string,
-      },
-    });
-
-    await db.user.update({
-      where: {
-        id: post?.userId,
-      },
-      data: {
-        hasNotification: true,
-      },
-    });
+    //     await db.user.update({
+    //       where: {
+    //         id: post.userId,
+    //       },
+    //       data: {
+    //         hasNotification: true,
+    //       },
+    //     });
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    //   return { error: 'Cannot post notification!' };
+    // }
   }
 
   if (method === 'DISLIKE') {
