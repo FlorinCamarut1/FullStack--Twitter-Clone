@@ -10,42 +10,38 @@ export const comments = async (body: string, postId: string) => {
   if (!postId || typeof postId !== 'string') {
     return { error: 'Invalid Id!' };
   }
-  try {
-    await db.comment.create({
+
+  await db.comment.create({
+    data: {
+      body,
+      userId: currentUser?.id as string,
+      postId,
+    },
+  });
+
+  const post = await db.post.findUnique({
+    where: {
+      id: postId,
+    },
+  });
+
+  if (post?.userId) {
+    await prisma?.notification.create({
       data: {
-        body,
-        userId: currentUser?.id as string,
-        postId,
+        body: 'Someone replied to your tweet!',
+        userId: post.userId,
       },
     });
 
-    const post = await db.post.findUnique({
+    await db.user.update({
       where: {
-        id: postId,
+        id: post.userId,
+      },
+      data: {
+        hasNotification: true,
       },
     });
-
-    if (post?.userId) {
-      await prisma?.notification.create({
-        data: {
-          body: 'Someone replied to your tweet!',
-          userId: post.userId,
-        },
-      });
-
-      await db.user.update({
-        where: {
-          id: post.userId,
-        },
-        data: {
-          hasNotification: true,
-        },
-      });
-    }
-
-    return { success: 'Succesfully added comment!' };
-  } catch (error) {
-    console.log(error);
-    return { error: 'Could not add a new comment!' };
   }
+
+  return { success: 'Succesfully added comment!' };
 };
