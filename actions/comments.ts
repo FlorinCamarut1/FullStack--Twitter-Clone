@@ -25,23 +25,21 @@ export const comments = async (body: string, postId: string) => {
     },
   });
 
-  if (post?.userId) {
-    await prisma?.notification.create({
-      data: {
-        body: 'Someone replied to your tweet!',
-        userId: post.userId,
-      },
-    });
+  await prisma?.notification.create({
+    data: {
+      body: 'Someone replied to your tweet!',
+      userId: post?.userId as string,
+    },
+  });
 
-    await db.user.update({
-      where: {
-        id: post.userId,
-      },
-      data: {
-        hasNotification: true,
-      },
-    });
-  }
+  await db.user.update({
+    where: {
+      id: post?.userId as string,
+    },
+    data: {
+      hasNotification: true,
+    },
+  });
 
   return { success: 'Succesfully added comment!' };
 };
