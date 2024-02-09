@@ -5,6 +5,7 @@ import db from '@/lib/db';
 
 import { RegisterSchema } from '@/schemas';
 import { getByUsername, getUserByEmail } from '@/data/user';
+import useUsers from '@/hooks/useUsers';
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const validateFields = RegisterSchema.safeParse(values);

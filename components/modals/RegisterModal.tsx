@@ -10,9 +10,10 @@ import useRegisterModal from '@/hooks/useRegisterModal';
 import Input from '../Input';
 import Modal from '../Modal';
 import toast from 'react-hot-toast';
+import useUsers from '@/hooks/useUsers';
 
 const RegisterModal = () => {
-  const { mutate } = useSWRConfig();
+  const { mutate } = useUsers();
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
 
@@ -49,7 +50,7 @@ const RegisterModal = () => {
         setName('');
         setUsername('');
         setPassword('');
-        mutate('/api/users');
+        mutate();
       });
     });
   };
