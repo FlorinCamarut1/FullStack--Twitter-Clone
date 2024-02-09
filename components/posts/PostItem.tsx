@@ -13,15 +13,13 @@ interface PostItemProps {
   userId?: string;
 }
 const PostItem = ({ data = {}, userId }: PostItemProps) => {
-  const [filledHearthIcon, setFilledHearthIcon] = useState(false);
-
   const currentUser = useCurrentUser();
 
   const { toggleLiked, hasLiked, isPending } = useLike({
     postId: data?.id,
     userId,
   });
-
+  const [isFilledIcon, setIsFilledIcon] = useState<boolean>(hasLiked);
   const router = useRouter();
   const loginModal = useLoginModal();
 
@@ -44,13 +42,11 @@ const PostItem = ({ data = {}, userId }: PostItemProps) => {
       if (!currentUser) {
         return loginModal.onOpen();
       }
-      setFilledHearthIcon((icon) => !icon);
-      if (hasLiked) {
-        setFilledHearthIcon(false);
-      }
       toggleLiked();
+
+      setIsFilledIcon((fill) => !fill);
     },
-    [loginModal, currentUser, toggleLiked, hasLiked]
+    [loginModal, currentUser, toggleLiked]
   );
 
   const createdAt = useMemo(() => {
@@ -61,11 +57,12 @@ const PostItem = ({ data = {}, userId }: PostItemProps) => {
     return formatDistanceToNowStrict(new Date(data?.createdAt));
   }, [data.createdAt]);
 
-  const LikeIcon = filledHearthIcon ? (
-    <AiFillHeart size={20} color='red' />
-  ) : (
-    <AiOutlineHeart size={20} />
-  );
+  const LikeIcon =
+    isFilledIcon || hasLiked ? (
+      <AiFillHeart size={20} color='red' />
+    ) : (
+      <AiOutlineHeart size={20} />
+    );
   return (
     <div
       onClick={goToPost}
