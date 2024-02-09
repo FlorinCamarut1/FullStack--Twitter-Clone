@@ -1,12 +1,16 @@
 'use server';
 
 import { auth } from '@/auth';
+
 import db from '@/lib/db';
-import { post } from './post';
 
 export const like = async (postId: string, method: string) => {
   const session = await auth();
-  const currentUser = session?.user;
+  const currentSessionUser = session?.user;
+
+  const currentUserData = await db.user.findUnique({
+    where: { id: currentSessionUser?.id },
+  });
 
   if (!postId || typeof postId !== 'string') {
     return { error: 'Invalid ID!' };
@@ -23,7 +27,7 @@ export const like = async (postId: string, method: string) => {
   let updatedLikes = [...(post.likedIds || [])];
 
   if (method === 'LIKE') {
-    updatedLikes.push(currentUser?.id as string);
+    updatedLikes.push(currentSessionUser?.id as string);
     /**
      * Notifications
      */
@@ -34,17 +38,20 @@ export const like = async (postId: string, method: string) => {
         },
       });
 
-      if (post?.userId) {
+      if (post?.userId !== currentSessionUser?.id) {
         await db.notification.create({
           data: {
-            body: 'Someone liked you tweet!',
-            userId: post.userId,
+            body: `liked your tweet!`,
+            userId: post?.userId as string,
+            notificatorId: currentUserData?.id,
+            postId,
+            notificatorUsername: currentUserData?.username,
           },
         });
 
         await db.user.update({
           where: {
-            id: post.userId,
+            id: post?.userId as string,
           },
           data: {
             hasNotification: true,
@@ -59,7 +66,7 @@ export const like = async (postId: string, method: string) => {
 
   if (method === 'DISLIKE') {
     updatedLikes = updatedLikes.filter(
-      (likedId) => likedId !== currentUser?.id
+      (likedId) => likedId !== currentSessionUser?.id
     );
   }
 

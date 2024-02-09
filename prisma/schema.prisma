@@ -61,6 +61,10 @@ model Notification {
   body               String
   userId             String @db.ObjectId
   createdAt          DateTime @default(now())
+  notificatorId      String?  
+  notificatorUsername String?
+  postId             String?
+
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
