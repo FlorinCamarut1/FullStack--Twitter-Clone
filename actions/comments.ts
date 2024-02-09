@@ -5,7 +5,13 @@ import db from '@/lib/db';
 
 export const comments = async (body: string, postId: string) => {
   const session = await auth();
-  const currentUser = session?.user;
+  const currentSessionUser = session?.user;
+
+  const currentUserData = await db.user.findUnique({
+    where: {
+      id: currentSessionUser?.id,
+    },
+  });
 
   if (!postId || typeof postId !== 'string') {
     return { error: 'Invalid Id!' };
@@ -14,7 +20,7 @@ export const comments = async (body: string, postId: string) => {
     await db.comment.create({
       data: {
         body,
-        userId: currentUser?.id as string,
+        userId: currentSessionUser?.id as string,
         postId,
       },
     });
@@ -26,17 +32,20 @@ export const comments = async (body: string, postId: string) => {
         },
       });
 
-      if (post?.userId) {
+      if (post?.userId !== currentSessionUser?.id) {
         await db.notification.create({
           data: {
-            body: 'Someone replied to your tweet!',
-            userId: post.userId,
+            body: `replied to your tweet!`,
+            userId: post?.userId as string,
+            postId,
+            notificatorId: currentSessionUser?.id as string,
+            notificatorUsername: currentUserData?.username,
           },
         });
 
         await db.user.update({
           where: {
-            id: post.userId,
+            id: post?.userId,
           },
           data: {
             hasNotification: true,

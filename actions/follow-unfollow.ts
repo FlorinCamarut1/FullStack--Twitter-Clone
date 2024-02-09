@@ -3,12 +3,11 @@
 import { auth } from '@/auth';
 
 import db from '@/lib/db';
-import { FaB } from 'react-icons/fa6';
 
 export const followOrUnfollow = async (userId: string, method: string) => {
   try {
     const session = await auth();
-    const currentUser = session?.user;
+    const currentSessionUser = session?.user;
 
     if (!userId || typeof userId !== 'string') {
       return { error: 'Invalid ID!' };
@@ -20,15 +19,15 @@ export const followOrUnfollow = async (userId: string, method: string) => {
       },
     });
 
-    const curUser = await db.user.findUnique({
+    const currentUserData = await db.user.findUnique({
       where: {
-        id: currentUser?.id,
+        id: currentSessionUser?.id,
       },
     });
 
     if (!user) return { error: 'Invalid ID!' };
 
-    let updatedFollowingIds = [...(curUser?.followingIds || [])];
+    let updatedFollowingIds = [...(currentUserData?.followingIds || [])];
 
     if (method === 'FOLLOW') {
       updatedFollowingIds.push(userId);
@@ -36,8 +35,11 @@ export const followOrUnfollow = async (userId: string, method: string) => {
       try {
         await db.notification.create({
           data: {
-            body: 'Someone followed you!',
+            body: `has started following you!`,
             userId,
+            notificatorId: currentUserData?.id,
+            notificatorUsername: currentUserData?.username,
+            postId: 'user',
           },
         });
 
@@ -61,7 +63,7 @@ export const followOrUnfollow = async (userId: string, method: string) => {
     }
     await db.user.update({
       where: {
-        id: currentUser?.id,
+        id: currentSessionUser?.id,
       },
       data: {
         followingIds: updatedFollowingIds,
