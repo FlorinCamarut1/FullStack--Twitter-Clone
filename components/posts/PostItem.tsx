@@ -43,10 +43,13 @@ const PostItem = ({ data = {}, userId }: PostItemProps) => {
         return loginModal.onOpen();
       }
       toggleLiked();
-
       setIsFilledIcon((fill) => !fill);
+
+      if (hasLiked) {
+        setIsFilledIcon(false);
+      }
     },
-    [loginModal, currentUser, toggleLiked]
+    [loginModal, currentUser, toggleLiked, hasLiked]
   );
 
   const createdAt = useMemo(() => {
