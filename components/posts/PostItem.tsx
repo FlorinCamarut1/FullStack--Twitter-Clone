@@ -1,6 +1,6 @@
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useRouter } from 'next/navigation';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { AiFillHeart, AiOutlineHeart, AiOutlineMessage } from 'react-icons/ai';
 import { formatDistanceToNowStrict } from 'date-fns';
 
@@ -13,6 +13,8 @@ interface PostItemProps {
   userId?: string;
 }
 const PostItem = ({ data = {}, userId }: PostItemProps) => {
+  const [filledHearthIcon, setFilledHearthIcon] = useState(false);
+
   const currentUser = useCurrentUser();
 
   const { toggleLiked, hasLiked, isPending } = useLike({
@@ -42,9 +44,13 @@ const PostItem = ({ data = {}, userId }: PostItemProps) => {
       if (!currentUser) {
         return loginModal.onOpen();
       }
+      setFilledHearthIcon((icon) => !icon);
+      if (hasLiked) {
+        setFilledHearthIcon(false);
+      }
       toggleLiked();
     },
-    [loginModal, currentUser, toggleLiked]
+    [loginModal, currentUser, toggleLiked, hasLiked]
   );
 
   const createdAt = useMemo(() => {
@@ -55,7 +61,7 @@ const PostItem = ({ data = {}, userId }: PostItemProps) => {
     return formatDistanceToNowStrict(new Date(data?.createdAt));
   }, [data.createdAt]);
 
-  const LikeIcon = hasLiked ? (
+  const LikeIcon = filledHearthIcon ? (
     <AiFillHeart size={20} color='red' />
   ) : (
     <AiOutlineHeart size={20} />

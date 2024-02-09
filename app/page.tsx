@@ -6,8 +6,10 @@ import LoginModal from '@/components/modals/LoginModal';
 import RegisterModal from '@/components/modals/RegisterModal';
 import Form from '@/components/Form';
 import PostFeed from '@/components/posts/PostFeed';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
 
 export default function Home() {
+  const loggedInUser = useCurrentUser();
   return (
     <>
       <Toaster />
@@ -15,7 +17,7 @@ export default function Home() {
       <LoginModal />
       <Header label='Home' />
       <Form placeholder="What's happening?" />
-      <PostFeed />
+      {loggedInUser && <PostFeed />}
     </>
   );
 }
