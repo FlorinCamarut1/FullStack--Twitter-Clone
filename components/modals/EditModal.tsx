@@ -18,18 +18,22 @@ interface EditModalProps {
 }
 
 const EditModal = ({ currentUser }: EditModalProps) => {
-  const { mutate: mutateFetchedUser, data: currUser } = useUser(
+  const { mutate: mutateFetchedUser, data: currentUserData } = useUser(
     currentUser?.id
   );
   const { mutate: mutateFetchedUsers } = useUsers();
 
   const editModal = useEditModal();
 
-  const [profileImage, setProfileImage] = useState('');
-  const [coverImage, setCoverImage] = useState('');
-  const [name, setName] = useState('');
-  const [username, setUsername] = useState('');
-  const [bio, setBio] = useState('');
+  const [profileImage, setProfileImage] = useState(
+    currentUserData?.profileImage || ''
+  );
+  const [coverImage, setCoverImage] = useState(
+    currentUserData?.coverImage || ''
+  );
+  const [name, setName] = useState(currentUserData?.name || '');
+  const [username, setUsername] = useState(currentUserData?.username || '');
+  const [bio, setBio] = useState(currentUserData?.bio || '');
 
   const [isPending, startTransition] = useTransition();
 
@@ -58,20 +62,6 @@ const EditModal = ({ currentUser }: EditModalProps) => {
     editModal,
     mutateFetchedUser,
     mutateFetchedUsers,
-  ]);
-
-  useEffect(() => {
-    setName(currUser?.name);
-    setUsername(currUser?.username);
-    setBio(currUser?.bio);
-    setProfileImage(currUser?.profileImage);
-    setCoverImage(currUser?.coverImage);
-  }, [
-    currUser?.name,
-    currUser?.username,
-    currUser?.bio,
-    currUser?.profileImage,
-    currUser?.coverImage,
   ]);
 
   const bodyContent = (
