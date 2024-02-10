@@ -5,13 +5,24 @@ import { ClipLoader } from 'react-spinners';
 
 import useUsers from '@/hooks/useUsers';
 import Avatar from '../Avatar';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
+import useUser from '@/hooks/useUser';
 
 const FollowBar = () => {
-  const { data: users, mutate: mutateFetchedUsers, isLoading } = useUsers();
+  const currentUser = useCurrentUser();
+  const { mutate: mutateCurrentUser, isLoading: isLoadingUserData } = useUser(
+    currentUser?.id as string
+  );
+  const {
+    data: users,
+    mutate: mutateFetchedUsers,
+    isLoading: isLoadingUsersData,
+  } = useUsers();
 
   const refreshUsers = (event: any) => {
     event.stopPropagation();
     mutateFetchedUsers();
+    mutateCurrentUser();
   };
 
   if (users?.length === 0) return null;
@@ -19,14 +30,15 @@ const FollowBar = () => {
   return (
     <>
       <div className='px-6 py-4 lg:block hidden relative'>
-        {isLoading ? (
+        {isLoadingUserData || isLoadingUsersData ? (
           <ClipLoader color='lightblue' size={20} />
         ) : (
-          <IoReload
-            size={20}
-            className='text-white absolute top-10 right-10 cursor-pointer'
-            onClick={refreshUsers}
-          />
+          <div onClick={refreshUsers}>
+            <IoReload
+              size={20}
+              className='text-white absolute top-10 right-10 cursor-pointer'
+            />
+          </div>
         )}
         <div className='bg-neutral-800 rounded-xl p-4'>
           <h2 className='text-white text-xl font-semibold'>Who to follow</h2>
