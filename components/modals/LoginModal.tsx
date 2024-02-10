@@ -1,11 +1,11 @@
 'use client';
 import useLoginModal from '@/hooks/useLoginModal';
 import { useCallback, useState, useTransition } from 'react';
+import { login } from '@/actions/login';
 
 import Input from '../Input';
 import Modal from '../Modal';
 import useRegisterModal from '@/hooks/useRegisterModal';
-import { login } from '@/actions/login';
 import toast from 'react-hot-toast';
 
 const LoginModal = () => {

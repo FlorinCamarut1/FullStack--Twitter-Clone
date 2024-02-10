@@ -1,13 +1,13 @@
 'use client';
 
 import { ClipLoader } from 'react-spinners';
+import { Toaster } from 'react-hot-toast';
 
 import Header from '@/components/Header';
 import PostItem from '@/components/posts/PostItem';
 import usePost from '@/hooks/usePost';
 import Form from '@/components/Form';
 import CommentFeed from '@/components/posts/CommentFeed';
-import { Toaster } from 'react-hot-toast';
 
 const PostPage = ({ params }: { params: { postId: string } }) => {
   const postId = params.postId;
