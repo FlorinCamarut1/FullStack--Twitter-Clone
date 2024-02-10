@@ -2,10 +2,10 @@ import './globals.css';
 
 import { Inter } from 'next/font/google';
 import { SessionProvider, useSession } from 'next-auth/react';
+import { auth } from '@/auth';
 
 import Sidebar from '../components/layout/Sidebar';
 import FollowBar from '@/components/layout/FollowBar';
-import { auth } from '@/auth';
 
 const inter = Inter({ subsets: ['latin'] });
 

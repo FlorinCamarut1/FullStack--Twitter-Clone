@@ -7,6 +7,7 @@ import { formatDistanceToNowStrict } from 'date-fns';
 import useLoginModal from '@/hooks/useLoginModal';
 import Avatar from '../Avatar';
 import useLike from '@/hooks/useLike';
+import LongMenu from '../LongMenu';
 
 interface PostItemProps {
   data: Record<string, any>;
@@ -19,6 +20,7 @@ const PostItem = ({ data = {}, userId }: PostItemProps) => {
     postId: data?.id,
     userId,
   });
+
   const [isFilledIcon, setIsFilledIcon] = useState<boolean>(hasLiked);
   const router = useRouter();
   const loginModal = useLoginModal();
@@ -69,8 +71,13 @@ const PostItem = ({ data = {}, userId }: PostItemProps) => {
   return (
     <div
       onClick={goToPost}
-      className='border-b-[1px] border-neutral-800 p-5 cursor-pointer hover:bg-neutral-900 transition'
+      className='border-b-[1px] border-neutral-800 p-5 cursor-pointer hover:bg-neutral-900 transition relative'
     >
+      {currentUser?.id === data?.userId && (
+        <div className='absolute right-0 h-11 w-11'>
+          <LongMenu postId={data?.id} />
+        </div>
+      )}
       <div className=' flex flex-row items-start gap-3'>
         <Avatar userId={data?.user?.id} />
         <div>

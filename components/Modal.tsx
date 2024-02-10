@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
+
 import Button from './Button';
 
 interface ModalProps {
@@ -11,6 +12,7 @@ interface ModalProps {
   footer?: React.ReactElement;
   actionLabel: string;
   disabled?: boolean;
+  isConfirmed?: boolean;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -22,6 +24,7 @@ const Modal: React.FC<ModalProps> = ({
   actionLabel,
   footer,
   disabled,
+  isConfirmed,
 }) => {
   const handleClose = useCallback(() => {
     if (disabled) {
@@ -52,7 +55,7 @@ const Modal: React.FC<ModalProps> = ({
           flex 
           overflow-x-hidden 
           overflow-y-auto 
-      fixed
+          fixed
           inset-0 
           z-50 
           outline-none 

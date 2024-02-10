@@ -1,9 +1,16 @@
 'use client';
+
 import useUsers from '@/hooks/useUsers';
 import Avatar from '../Avatar';
 
+import { useEffect } from 'react';
+
 const FollowBar = () => {
-  const { data: users } = useUsers();
+  const { data: users, mutate: mutateFetchedUsers } = useUsers();
+
+  useEffect(() => {
+    mutateFetchedUsers();
+  }, [mutateFetchedUsers]);
 
   if (users?.length === 0) return null;
 

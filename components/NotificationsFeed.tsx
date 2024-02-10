@@ -3,11 +3,10 @@
 import { useEffect } from 'react';
 import { BsTwitter } from 'react-icons/bs';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
+import { useRouter } from 'next/navigation';
 
 import useNotifications from '@/hooks/useNotifications';
 import useUser from '@/hooks/useUser';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 
 const NotificationsFeed = () => {
   const router = useRouter();
@@ -43,6 +42,7 @@ const NotificationsFeed = () => {
       </div>
     );
   }
+
   return (
     <div className='flex flex-col'>
       {fetchedNotifications.map((notification: Record<string, any>) => (

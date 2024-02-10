@@ -2,7 +2,6 @@
 
 import { useCallback, useState, useTransition } from 'react';
 import { register } from '@/actions/register';
-import { useSWRConfig } from 'swr';
 
 import useLoginModal from '@/hooks/useLoginModal';
 import useRegisterModal from '@/hooks/useRegisterModal';
