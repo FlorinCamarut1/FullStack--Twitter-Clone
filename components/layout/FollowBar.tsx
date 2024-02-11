@@ -1,45 +1,25 @@
 'use client';
 
 import { IoReload } from 'react-icons/io5';
-import { ClipLoader } from 'react-spinners';
+import { useEffect, useState } from 'react';
 
 import useUsers from '@/hooks/useUsers';
 import Avatar from '../Avatar';
-import { useCurrentUser } from '@/hooks/useCurrentUser';
-import useUser from '@/hooks/useUser';
 
 const FollowBar = () => {
-  const currentUser = useCurrentUser();
-  const { mutate: mutateCurrentUser, isLoading: isLoadingUserData } = useUser(
-    currentUser?.id as string
-  );
-  const {
-    data: users,
-    mutate: mutateFetchedUsers,
-    isLoading: isLoadingUsersData,
-  } = useUsers();
+  const [userData, setUserData] = useState();
+  const { data: users, mutate: mutateFetchedUsers } = useUsers();
 
-  const refreshUsers = (event: any) => {
-    event.stopPropagation();
+  useEffect(() => {
     mutateFetchedUsers();
-    mutateCurrentUser();
-  };
+    setUserData(users);
+  }, [mutateFetchedUsers, users]);
 
   if (users?.length === 0) return null;
 
   return (
     <>
       <div className='px-6 py-4 lg:block hidden relative'>
-        {isLoadingUserData || isLoadingUsersData ? (
-          <ClipLoader color='lightblue' size={20} />
-        ) : (
-          <div onClick={refreshUsers}>
-            <IoReload
-              size={20}
-              className='text-white absolute top-10 right-10 cursor-pointer'
-            />
-          </div>
-        )}
         <div className='bg-neutral-800 rounded-xl p-4'>
           <h2 className='text-white text-xl font-semibold'>Who to follow</h2>
           <div className='flex flex-col gap-6 mt-4'>
