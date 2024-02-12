@@ -12,6 +12,7 @@ interface LongMenuProps {
   options: string[];
   isComment?: boolean;
   commentId?: string;
+  commentPostId?: string;
 }
 
 export default function LongMenu({
@@ -19,6 +20,7 @@ export default function LongMenu({
   options,
   isComment,
   commentId,
+  commentPostId,
 }: LongMenuProps) {
   const deleteModal = useDeleteModal();
 
@@ -46,8 +48,8 @@ export default function LongMenu({
       <div onClick={stopEPropagation}>
         <HandleDeleteModal
           isComment={isComment}
-          postId={postId}
-          commentId={commentId}
+          id={isComment ? commentId : postId}
+          commentPostId={commentId}
           title={`Are you sure you want to delete this ${
             isComment ? 'comment' : 'post'
           }?`}

@@ -7,40 +7,43 @@ import Modal from '../Modal';
 import toast from 'react-hot-toast';
 import usePosts from '@/hooks/usePosts';
 import useDeleteModal from '@/hooks/useDeleteModal';
+import usePost from '@/hooks/usePost';
 
 interface HandleDeleteModalProps {
   title?: string;
   isComment?: boolean;
-  postId?: string;
-  commentId?: string;
+  id?: string;
+  commentPostId?: string;
 }
 
 const HandleDeleteModal = ({
   title,
   isComment,
-  postId,
-  commentId,
+  id,
+  commentPostId,
 }: HandleDeleteModalProps) => {
   const [isPending, startTransition] = useTransition();
   const { mutate: mutateFetchedPosts } = usePosts();
+  const { mutate: mutateFetchedPost } = usePost(commentPostId);
 
   const deleteModal = useDeleteModal();
 
   const onSubmit = () => {
-    startTransition(() => {
-      deleteComment(commentId as string).then((data) => {
-        if (data.error) {
-          toast.error(data.error);
-        } else if (data.success) {
-          toast.success(data.success);
-          deleteModal.onClose();
-        }
-      });
-    });
     if (isComment) {
+      startTransition(() => {
+        deleteComment(id as string).then((data) => {
+          if (data.error) {
+            toast.error(data.error);
+          } else if (data.success) {
+            toast.success(data.success);
+            deleteModal.onClose();
+            mutateFetchedPost();
+          }
+        });
+      });
     } else {
       startTransition(() => {
-        deletePost(postId as string).then((data) => {
+        deletePost(id as string).then((data) => {
           if (data.error) {
             toast.error(data.error);
           } else if (data.success) {
