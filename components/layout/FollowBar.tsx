@@ -2,9 +2,11 @@
 import useUsers from '@/hooks/useUsers';
 import Avatar from '../Avatar';
 
-const FollowBar = () => {
-  const { data: users } = useUsers();
+interface FollowBarProps {
+  users?: Record<string, any>[];
+}
 
+const FollowBar = ({ users }: Record<string, any>) => {
   if (users?.length === 0) return null;
 
   return (
