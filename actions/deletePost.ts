@@ -16,13 +16,11 @@ export const deletePost = async (postId: string) => {
     },
   });
 
-  if (currentUser?.id === post?.userId) {
-    await db.post.delete({
-      where: {
-        id: postId,
-      },
-    });
-  }
+  await db.post.delete({
+    where: {
+      id: postId,
+    },
+  });
 
   return { success: 'Post Deleted Succesfully!' };
 };
