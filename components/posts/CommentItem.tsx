@@ -36,7 +36,12 @@ const CommentItem = ({ data }: CommentItemProps) => {
     <div className='border-b-[1px] border-neutral-800 p-5 cursor-pointer hover:bg-neutral-900 transition relative'>
       {currentUser?.id === data?.userId && (
         <div className='absolute right-0 h-11 w-11'>
-          <LongMenu commentId={data?.id} options={['delete']} isComment />
+          <LongMenu
+            commentId={data?.id}
+            options={['delete']}
+            isComment
+            commentPostId={data?.postId}
+          />
         </div>
       )}
       <div className='flex flex-row items-start gap-3'>
