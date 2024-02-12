@@ -23,7 +23,6 @@ const PostPage = ({ params }: { params: { postId: string } }) => {
 
   return (
     <>
-      <Toaster />
       <Header label='Tweet' showBackArrow />
       <PostItem data={fetchedPost[0]} />
       <Form

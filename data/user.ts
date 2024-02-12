@@ -41,11 +41,3 @@ export const getByUsername = async (username: string) => {
     return null;
   }
 };
-export const getAllUsers = async () => {
-  const users = await db.user.findMany({
-    orderBy: {
-      createdAt: 'desc',
-    },
-  });
-  return users;
-};
