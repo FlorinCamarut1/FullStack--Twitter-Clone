@@ -1,10 +1,9 @@
-'use server';
-
+'use client';
 import useUsers from '@/hooks/useUsers';
 import Avatar from '../Avatar';
 
 const FollowBar = () => {
-  const { data: users, mutate: mutateFetchedUsers } = useUsers();
+  const { data: users } = useUsers();
 
   if (users?.length === 0) return null;
 
