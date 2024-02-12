@@ -28,7 +28,6 @@ const UserView = ({ params }: { params: { userId: string } }) => {
 
   return (
     <>
-      <Toaster />
       <Header label={fetchedUser.name} showBackArrow />
       <UserHero userId={userId as string} />
       <UserBio userId={userId as string} currentUser={currentUser} />
