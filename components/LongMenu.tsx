@@ -3,9 +3,8 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-
-import HandleDeleteModal from './modals/HandleDeleteModal';
-import useDeleteModal from '@/hooks/useDeleteModal';
+import ConfirmDeletion from './posts/ConfirmDeletion';
+import { useState } from 'react';
 
 interface LongMenuProps {
   postId?: string;
@@ -22,12 +21,12 @@ export default function LongMenu({
   commentId,
   commentPostId,
 }: LongMenuProps) {
-  const deleteModal = useDeleteModal();
-
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const [isOpen, setIsOpen] = useState(false);
 
   const stopEPropagation = (event: any) => {
+    event.preventDefault();
     event.stopPropagation();
   };
 
@@ -36,24 +35,26 @@ export default function LongMenu({
   };
 
   const handleDeletePost = () => {
-    deleteModal.onOpen();
+    setIsOpen((open) => !open);
     setAnchorEl(null);
   };
-  const handleClose = () => {
+  const handleClose = (event: any) => {
     setAnchorEl(null);
   };
 
   return (
     <>
       <div onClick={stopEPropagation}>
-        <HandleDeleteModal
+        <ConfirmDeletion
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          title='Are you sure you want to delete?'
+          postId={postId}
+          commentId={commentId}
           isComment={isComment}
-          id={isComment ? commentId : postId}
-          commentPostId={commentId}
-          title={`Are you sure you want to delete this ${
-            isComment ? 'comment' : 'post'
-          }?`}
+          commentPostId={commentPostId}
         />
+
         <IconButton
           aria-label='more'
           id='long-button'
