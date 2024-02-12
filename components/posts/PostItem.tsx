@@ -75,7 +75,7 @@ const PostItem = ({ data = {}, userId }: PostItemProps) => {
     >
       {currentUser?.id === data?.userId && (
         <div className='absolute right-0 h-11 w-11'>
-          <LongMenu postId={data?.id} />
+          <LongMenu postId={data?.id} options={['delete']} />
         </div>
       )}
       <div className=' flex flex-row items-start gap-3'>

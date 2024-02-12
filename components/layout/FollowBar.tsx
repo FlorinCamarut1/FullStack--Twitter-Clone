@@ -1,19 +1,10 @@
 'use client';
 
-import { IoReload } from 'react-icons/io5';
-import { useEffect, useState } from 'react';
-
 import useUsers from '@/hooks/useUsers';
 import Avatar from '../Avatar';
 
 const FollowBar = () => {
-  const [userData, setUserData] = useState();
   const { data: users, mutate: mutateFetchedUsers } = useUsers();
-
-  useEffect(() => {
-    mutateFetchedUsers();
-    setUserData(users);
-  }, [mutateFetchedUsers, users]);
 
   if (users?.length === 0) return null;
 

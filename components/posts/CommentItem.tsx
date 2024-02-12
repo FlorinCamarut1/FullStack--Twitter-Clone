@@ -3,14 +3,17 @@
 import { formatDistanceToNowStrict } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
 
 import Avatar from '../Avatar';
+import LongMenu from '../LongMenu';
 
 interface CommentItemProps {
   data?: Record<string, any>;
 }
 
 const CommentItem = ({ data }: CommentItemProps) => {
+  const currentUser = useCurrentUser();
   const router = useRouter();
 
   const goToUser = useCallback(
@@ -30,7 +33,12 @@ const CommentItem = ({ data }: CommentItemProps) => {
   }, [data?.createdAt]);
 
   return (
-    <div className='border-b-[1px] border-neutral-800 p-5 cursor-pointer hover:bg-neutral-900 transition'>
+    <div className='border-b-[1px] border-neutral-800 p-5 cursor-pointer hover:bg-neutral-900 transition relative'>
+      {currentUser?.id === data?.userId && (
+        <div className='absolute right-0 h-11 w-11'>
+          <LongMenu commentId={data?.id} options={['delete']} isComment />
+        </div>
+      )}
       <div className='flex flex-row items-start gap-3'>
         <Avatar userId={data?.user.id} />
         <div>
