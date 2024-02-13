@@ -46,6 +46,10 @@ A Twitter clone application for creating accounts, posting tweets, managing comm
 
 The Twitter clone app is deployed on Vercel. You can access it [here](https://twitter-clone-opal-seven.vercel.app).
 
+For testing purpose use this account:
+email: test@test.com 
+password: 123456
+
 ## Usage
 
 1. Create an account with a unique username and password.
