@@ -8,6 +8,7 @@ A Twitter clone application for creating accounts, posting tweets, managing comm
 - [Deployment](#deployment)
 - [Usage](#usage)
 
+
 ## Features
 
 1. **Account Creation:**
