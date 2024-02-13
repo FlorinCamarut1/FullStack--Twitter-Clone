@@ -1,8 +1,8 @@
 'use client';
-import useLoginModal from '@/hooks/useLoginModal';
 import { useCallback, useState, useTransition } from 'react';
 import { login } from '@/actions/login';
 
+import useLoginModal from '@/hooks/useLoginModal';
 import Input from '../Input';
 import Modal from '../Modal';
 import useRegisterModal from '@/hooks/useRegisterModal';

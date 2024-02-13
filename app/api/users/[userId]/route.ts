@@ -1,3 +1,5 @@
+'use server';
+
 import { getUserById } from '@/data/user';
 
 import { NextRequest, NextResponse } from 'next/server';
