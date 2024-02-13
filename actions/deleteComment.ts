@@ -1,7 +1,6 @@
 'use server';
 
 import { auth } from '@/auth';
-import usePosts from '@/hooks/usePosts';
 
 import db from '@/lib/db';
 

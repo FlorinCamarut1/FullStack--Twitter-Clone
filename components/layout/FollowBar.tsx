@@ -6,7 +6,7 @@ interface FollowBarProps {
   users?: Record<string, any>[];
 }
 
-const FollowBar = ({ users }: Record<string, any>) => {
+const FollowBar = ({ users }: FollowBarProps) => {
   if (users?.length === 0) return null;
 
   return (

@@ -61,7 +61,7 @@ const ConfirmDeletion = ({
   if (!isOpen) return null;
 
   return (
-    <div className='flex flex-col z-50 bg-black p-5 border-[1px] border-neutral-500 absolute w-[200px] left-[-200px] justify-center items-center'>
+    <div className='flex flex-col z-50 bg-black p-5 border-[1px] border-neutral-500 absolute w-[200px] left-[-200px] justify-center items-center rounded-xl'>
       <p className='text-white font-semibold text-center mb-2'>{title}</p>
       <div className='flex gap-4'>
         <Button label='Yes' onClick={handleYes} disabled={isPending} />

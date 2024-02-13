@@ -1,5 +1,3 @@
-import { RegisterSchema } from '@/schemas';
-
 interface InputProps {
   placeholder?: string;
   value?: string;
