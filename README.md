@@ -52,7 +52,7 @@ password: 123456
    - Delete notifications.
 
 8. **Profile Information:**
-   - Update your profile information.
+   - Update your profile information, maximum Image size that can be uploaded to an avatar or cover image is 1MB due to MongoDB Free plan limitation.
 
 ## Usage
 
