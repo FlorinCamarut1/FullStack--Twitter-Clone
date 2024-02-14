@@ -1,6 +1,6 @@
 import * as React from 'react';
 import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
+import Menu, { MenuProps } from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ConfirmDeletion from './posts/ConfirmDeletion';
@@ -26,7 +26,7 @@ export default function LongMenu({
   const open = Boolean(anchorEl);
   const [isOpen, setIsOpen] = useState(false);
 
-  const stopEPropagation = (event: any) => {
+  const stopEPropagation = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
     event.stopPropagation();
   };
@@ -39,7 +39,7 @@ export default function LongMenu({
     setIsOpen((open) => !open);
     setAnchorEl(null);
   };
-  const handleClose = (event: any) => {
+  const handleClose = (event: MenuProps) => {
     setAnchorEl(null);
   };
 
