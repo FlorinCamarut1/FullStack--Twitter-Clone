@@ -2,6 +2,18 @@
 
 A Twitter clone application for creating accounts, posting tweets, managing comments, receiving notifications, and updating profile information.
 
+## Technologies Used
+
+Next.js 14, Auth v5, Tailwind CSS, PrismaDB, MongoDB
+
+## Deployment
+
+The Twitter clone app is deployed on Vercel. You can access it [here](https://twitter-clone-opal-seven.vercel.app).
+
+For testing purpose, use this account:
+email: test@test.com 
+password: 123456
+
 ## Table of Contents
 
 - [Features](#features)
@@ -41,14 +53,6 @@ A Twitter clone application for creating accounts, posting tweets, managing comm
 
 8. **Profile Information:**
    - Update your profile information.
-
-## Deployment
-
-The Twitter clone app is deployed on Vercel. You can access it [here](https://twitter-clone-opal-seven.vercel.app).
-
-For testing purpose, use this account:
-email: test@test.com 
-password: 123456
 
 ## Usage
 
