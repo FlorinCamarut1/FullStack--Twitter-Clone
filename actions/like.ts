@@ -41,7 +41,7 @@ export const like = async (postId: string, method: string) => {
       if (post?.userId !== currentSessionUser?.id) {
         await db.notification.create({
           data: {
-            body: `liked your tweet!`,
+            body: `liked your post!`,
             userId: post?.userId as string,
             notificatorId: currentUserData?.id,
             postId,

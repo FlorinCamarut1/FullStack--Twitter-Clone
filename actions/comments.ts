@@ -35,7 +35,7 @@ export const comments = async (body: string, postId: string) => {
       if (post?.userId !== currentSessionUser?.id) {
         await db.notification.create({
           data: {
-            body: `replied to your tweet!`,
+            body: `replied to your post!`,
             userId: post?.userId as string,
             postId,
             notificatorId: currentSessionUser?.id as string,

@@ -25,11 +25,7 @@ const PostPage = ({ params }: { params: { postId: string } }) => {
     <>
       <Header label='Tweet' showBackArrow />
       <PostItem data={fetchedPost[0]} />
-      <Form
-        postId={postId as string}
-        isComment
-        placeholder='Tweet your reply'
-      />
+      <Form postId={postId as string} isComment placeholder='Post your reply' />
       <CommentFeed comments={fetchedPost[0]?.comments} />
     </>
   );
