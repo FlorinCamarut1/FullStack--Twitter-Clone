@@ -32,7 +32,7 @@ password: 123456
 
 2. **Tweeting:**
 
-   - Post.
+   - Post new tweet.
 
 3. **Tweet Management:**
 
