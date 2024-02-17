@@ -1,6 +1,7 @@
 'use client';
 
-import { BsTwitter } from 'react-icons/bs';
+import { HiEnvelope } from 'react-icons/hi2';
+
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useRouter } from 'next/navigation';
 import { ClipLoader } from 'react-spinners';
@@ -88,7 +89,7 @@ const NotificationsFeed = () => {
           key={notification?.id}
           className='flex flex-row items-center p-6 gap-4 border-b-[1px] border-neutral-800 cursor-pointer'
         >
-          <BsTwitter color='white' size={32} />
+          <HiEnvelope color='white' size={32} />
           <p className='text-white'>
             <span
               className='hover:text-sky-500 hover:underline'
